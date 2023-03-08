@@ -30,3 +30,4 @@ C:\Users\admin\Desktop\Abra-dot-net\Abra-test\Abra-test\obj\Debug\net6.0\refint\
 C:\Users\admin\Desktop\Abra-dot-net\Abra-test\Abra-test\obj\Debug\net6.0\Abra-test.pdb
 C:\Users\admin\Desktop\Abra-dot-net\Abra-test\Abra-test\obj\Debug\net6.0\Abra-test.genruntimeconfig.cache
 C:\Users\admin\Desktop\Abra-dot-net\Abra-test\Abra-test\obj\Debug\net6.0\ref\Abra-test.dll
+C:\Users\admin\Desktop\Abra-dot-net\Abra-test\Abra-test\bin\Debug\net6.0\Newtonsoft.Json.dll
