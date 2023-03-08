@@ -8,6 +8,7 @@ Some things I wanted to do but could not make it in the time i had:
 6) Add unit test
 7) Add error handling (generic gobal one + in the controller methods)
 8) The UpdateUserData method is accepting id inside the request body and not doing any thing with it, I wanted to create another model without the id for this method
+9) Get rid of the initial new project code (the one with the wather controller)
 
 
 Here is an image of the requests working with swagger: 
