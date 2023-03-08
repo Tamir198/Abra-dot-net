@@ -1,4 +1,4 @@
-Some things I wnted to do but could not make it in the time i had: 
+Some things I wanted to do but could not make it in the time i had: 
 
 1) Add business logic layer - the controller will call the BL layer and not directly like they are doing right now
 2) Making the DB user class singleton
