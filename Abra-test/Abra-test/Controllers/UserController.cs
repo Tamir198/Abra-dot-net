@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using Abra_test.DB;
 
 namespace Abra_test.Controllers {
 
@@ -10,7 +11,6 @@ namespace Abra_test.Controllers {
     [ApiController]
     [Route("api/user")]
     public class UserController : Controller {
-        private static Dictionary<string, UserModel> _users = new Dictionary<string, UserModel>();
         private readonly HttpClient _httpClient;
 
         public UserController(HttpClient httpClient) {
@@ -33,6 +33,7 @@ namespace Abra_test.Controllers {
 
         [HttpGet("GetMostPopularCountry")]
         public async Task<IActionResult> GetMostPopularCountry() {
+            
             var response = await _httpClient.GetAsync("https://randomuser.me/api/?results=5000");
             var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -91,18 +92,18 @@ namespace Abra_test.Controllers {
 
         [HttpPost("CreateNewUser")]
         public async Task<IActionResult> CreateNewUser(UserModel user) {
-            if (_users.ContainsKey(user.Id.ToString())) {
+            if (DB.USERS_DB._users.ContainsKey(user.Id.ToString())) {
                 return BadRequest("User with this ID already exists");
             }
             else {
-                _users.Add(user.Id.ToString(), user);
+                DB.USERS_DB._users.Add(user.Id.ToString(), user);
                 return Ok(user);
             }
         }
 
         [HttpGet("GetNewUser/{id}")]
         public async Task<IActionResult> GetNewUser(string id) {
-            if (_users.TryGetValue(id, out UserModel user)) {
+            if (DB.USERS_DB._users.TryGetValue(id, out UserModel user)) {
                 return Ok(user);
             }
             else {
@@ -112,11 +113,11 @@ namespace Abra_test.Controllers {
 
         [HttpPatch("UpdateUserData/{id}")]
         public async Task<IActionResult> UpdateUserData(string id, [FromBody] UserModel updatedUser) {
-            if (!_users.ContainsKey(id)) {
+            if (!DB.USERS_DB._users.ContainsKey(id)) {
                 return NotFound();
             }
 
-            UserModel user = _users[id];
+            UserModel user = DB.USERS_DB._users[id];
 
             if (!string.IsNullOrWhiteSpace(updatedUser.Name)) {
                 user.Name = updatedUser.Name;
