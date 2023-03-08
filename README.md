@@ -9,6 +9,6 @@ Some things I wnted to do but could not make it in the time i had:
 7) Add error handling (generic gobal one + in the controller methods)
 
 
-Here is an image of the requests working with swawgger: 
+Here is an image of the requests working with swagger: 
 
 [workingExample.pdf](https://github.com/Tamir198/Abra-dot-net/files/10919956/workingExample.pdf)
