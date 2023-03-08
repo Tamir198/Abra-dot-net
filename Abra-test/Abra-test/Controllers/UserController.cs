@@ -5,12 +5,12 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Abra_test.Controllers {
- 
+
 
     [ApiController]
     [Route("api/user")]
     public class UserController : Controller {
-        private static  Dictionary<string, UserModel> _users = new Dictionary<string, UserModel>();
+        private static Dictionary<string, UserModel> _users = new Dictionary<string, UserModel>();
         private readonly HttpClient _httpClient;
 
         public UserController(HttpClient httpClient) {
@@ -20,16 +20,16 @@ namespace Abra_test.Controllers {
         [HttpGet("GetUsersData")]
         public async Task<IActionResult> GetUsersData([FromQuery] string gender) {
             String url = "https://randomuser.me/api/?results=10&gender=" + gender;
-                var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.GetAsync(url);
 
-                if (response.IsSuccessStatusCode) {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return Ok(responseContent);
-                }
-                else {
-                    return StatusCode((int)response.StatusCode);
-                }
-         }
+            if (response.IsSuccessStatusCode) {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return Ok(responseContent);
+            }
+            else {
+                return StatusCode((int)response.StatusCode);
+            }
+        }
 
         [HttpGet("GetMostPopularCountry")]
         public async Task<IActionResult> GetMostPopularCountry() {
@@ -43,7 +43,7 @@ namespace Abra_test.Controllers {
                 .GroupBy(country => country)
                 .ToDictionary(group => group.Key, group => group.Count());
 
-            var mostPopularCountry =  countries.OrderByDescending(pair => pair.Value).First().Key;
+            var mostPopularCountry = countries.OrderByDescending(pair => pair.Value).First().Key;
 
 
             return Ok(mostPopularCountry);
@@ -61,7 +61,7 @@ namespace Abra_test.Controllers {
             var emails = json["results"]
                 .Select(result => result["email"].ToString())
                 .ToList();
-     
+
 
             return Ok(emails);
 
@@ -77,11 +77,11 @@ namespace Abra_test.Controllers {
 
             var oldestUser = json["results"]
              .Select(result => new {
-            Name = result["name"]["first"].ToString() + " " + result["name"]["last"].ToString(),
-            Age = result["dob"]["age"].ToObject<int>()
-        })
-        .OrderByDescending(user => user.Age)
-        .FirstOrDefault();
+                 Name = result["name"]["first"].ToString() + " " + result["name"]["last"].ToString(),
+                 Age = result["dob"]["age"].ToObject<int>()
+             })
+                .OrderByDescending(user => user.Age)
+              .FirstOrDefault();
 
 
             return Ok(oldestUser);
@@ -143,4 +143,4 @@ namespace Abra_test.Controllers {
         }
 
     }
-    }
+}
