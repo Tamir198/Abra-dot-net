@@ -1,11 +1,16 @@
-﻿    using Microsoft.AspNetCore.Mvc;
-      using Newtonsoft.Json.Linq;
-        using System.Text.Json;
+﻿using Abra_test.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Abra_test.Controllers {
+ 
+
     [ApiController]
     [Route("api/user")]
     public class UserController : Controller {
+        private static  Dictionary<string, UserModel> _users = new Dictionary<string, UserModel>();
         private readonly HttpClient _httpClient;
 
         public UserController(HttpClient httpClient) {
@@ -84,6 +89,58 @@ namespace Abra_test.Controllers {
         }
 
 
+        [HttpPost("CreateNewUser")]
+        public async Task<IActionResult> CreateNewUser(UserModel user) {
+            if (_users.ContainsKey(user.Id.ToString())) {
+                return BadRequest("User with this ID already exists");
+            }
+            else {
+                _users.Add(user.Id.ToString(), user);
+                return Ok(user);
+            }
+        }
+
+        [HttpGet("GetNewUser/{id}")]
+        public async Task<IActionResult> GetNewUser(string id) {
+            if (_users.TryGetValue(id, out UserModel user)) {
+                return Ok(user);
+            }
+            else {
+                return NotFound();
+            }
+        }
+
+        [HttpPatch("UpdateUserData/{id}")]
+        public async Task<IActionResult> UpdateUserData(string id, [FromBody] UserModel updatedUser) {
+            if (!_users.ContainsKey(id)) {
+                return NotFound();
+            }
+
+            UserModel user = _users[id];
+
+            if (!string.IsNullOrWhiteSpace(updatedUser.Name)) {
+                user.Name = updatedUser.Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updatedUser.Email)) {
+                user.Email = updatedUser.Email;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updatedUser.DateOfBirth)) {
+                user.DateOfBirth = updatedUser.DateOfBirth;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updatedUser.Phone)) {
+                user.Phone = updatedUser.Phone;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updatedUser.Country)) {
+                user.Country = updatedUser.Country;
+            }
+
+
+            return Ok(user);
+        }
 
     }
-}
+    }
