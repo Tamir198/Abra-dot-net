@@ -7,6 +7,7 @@ Some things I wanted to do but could not make it in the time i had:
 5) constants files for strings and things that repeting themself.
 6) Add unit test
 7) Add error handling (generic gobal one + in the controller methods)
+8) The UpdateUserData method is accepting id inside the request body and not doing any thing with it, I wanted to create another model without the id for this method
 
 
 Here is an image of the requests working with swagger: 
